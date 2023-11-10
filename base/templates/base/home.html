@@ -17,12 +17,17 @@
 
         <div class="mt-5">
             <h3>Subscription List</h3>
+            <form method="post" action="{% url 'undo_last_delete' %}" class="mt-3">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Undo Last Delete</button>
+            </form>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Subscription Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Payment Date</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +36,12 @@
                             <td>{{ subscription.sub_name }}</td>
                             <td>{{ subscription.price }}</td>
                             <td>{{ subscription.pay_date }}</td>
+                            <td>
+                                <form method="post" action="{% url 'delete_subscription' pk=subscription.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
